@@ -106,7 +106,7 @@ class VideoClassification(nn.Module):
             need_squeeze = True
 
         N, T, C, H, W = vid.shape
-        vid = vid.view(-1, C, H, W)
+        vid = vid.reshape(-1, C, H, W)
         # We hard-code antialias=False to preserve results after we changed
         # its default from None to True (see
         # https://github.com/pytorch/vision/pull/7160)
@@ -116,7 +116,7 @@ class VideoClassification(nn.Module):
         vid = F.convert_image_dtype(vid, torch.float)
         vid = F.normalize(vid, mean=self.mean, std=self.std)
         H, W = self.crop_size
-        vid = vid.view(N, T, C, H, W)
+        vid = vid.reshape(N, T, C, H, W)
         vid = vid.permute(0, 2, 1, 3, 4)  # (N, T, C, H, W) => (N, C, T, H, W)
 
         if need_squeeze:

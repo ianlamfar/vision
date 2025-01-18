@@ -529,8 +529,8 @@ class RAFT(nn.Module):
             up_mask = None if self.mask_predictor is None else self.mask_predictor(hidden_state)
             upsampled_flow = upsample_flow(flow=(coords1 - coords0), up_mask=up_mask)
             flow_predictions.append(upsampled_flow)
-
-        return flow_predictions
+            
+        return flow_predictions, hidden_state
 
 
 _COMMON_META = {
